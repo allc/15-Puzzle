@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>8 Puzzle</title>
+    <script src="js/main.js"></script>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<section id="container">
+    
+    <section id="puzzle_section">
+        <canvas id="puzzle"></canvas>
+    </section>
+    
+    <section id="puzzle_status">
+        <div id="moves">0 Moves</div>
+    </section>
+    
+    <section id="puzzle_controls">
+        <div><label>Start<button id="start"></button></label></div><div id="grid_size_options_div">Grid size: <input type="number" min="2" max="4" value="3" list="grid_number_list" id="grid_size"><datalist id="grid_number_list"><option value="3">3</option><option value="4">4</option></datalist></input></div>
+        <div><label>Create a Puzzle Using Your Own Image.<input type="file"></label></div>
+    </section>
+</section>
+</body>
+</html>

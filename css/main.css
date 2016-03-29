@@ -1,0 +1,47 @@
+/* container */
+body {
+    width: 100%;
+    background-color: floralwhite;
+}
+#container {
+    width: 500px;
+    margin: auto;
+}
+
+/* puzzle */
+#puzzle_section {
+    margin: auto;
+    width: 500px;
+    height: 500px;
+}
+#puzzle {
+    width: 100%;
+    height: 100%;
+    background-color: antiquewhite;
+}
+
+/* puzzle controls */
+/* puzzle controls general */
+#puzzle_controls {
+    width: 100%;
+}
+#puzzle_controls > div {
+    border: 0.1em solid black;
+    text-align: center;
+    padding: 0.5em 0;
+    margin: 0.3em 0;
+    cursor: pointer;
+}
+#puzzle_controls > div > label {
+    cursor: pointer;
+}
+#puzzle_controls input[type="file"], #puzzle_controls button {
+    display: none;
+}
+/* puzzle controls special */
+div#grid_size_options_div {
+    cursor: auto;
+}
+#grid_size_options_div > input {
+    width: 4em;
+}
