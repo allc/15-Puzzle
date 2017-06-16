@@ -18,10 +18,12 @@
     </section>
     
     <section id="puzzle_controls">
-        <div onclick="start_puzzle()"><label>Start<button id="start"></button></label></div><div id="grid_size_options_div">Grid size: <input type="number" min="2" max="4" value="3" list="grid_number_list" id="grid_size"><datalist id="grid_number_list"><option value="3">3</option><option value="4">4</option></datalist></input></div>
+        <div onclick="start_puzzle()"><label>Start<button id="start"></button></label></div><div id="puzzle_dimension_options_div">Puzzle dimension: <input type="number" min="2" max="4" list="puzzle_dimension_list" id="puzzle_dimension"><datalist id="puzzle_dimension_list"><option value="3">3</option><option value="4">4</option></datalist></input></div>
         <div><label>Create a Puzzle Using Your Own Image.<input id="file" type="file"></label></div>
     </section>
 </section>
 <script src="js/dom.js"></script>
+<script src="js/canvas.js"></script>
+<script src="js/puzzle.js"></script>
 </body>
 </html>

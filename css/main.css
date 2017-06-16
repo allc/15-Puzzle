@@ -39,9 +39,9 @@ body {
     display: none;
 }
 /* puzzle controls special */
-div#grid_size_options_div {
+div#puzzle_dimension_options_div {
     cursor: auto;
 }
-#grid_size_options_div > input {
+#puzzle_dimension_options_div > input {
     width: 4em;
 }
