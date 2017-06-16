@@ -5,8 +5,8 @@ var puzzleContext = puzzleCanvas.getContext('2d');
 var puzzleImage = new Image();
 puzzleImage.src = "img/testImg.png";
 // sizes of image
-var puzzleCanvasPaddingX = puzzleCanvas.width * 0.02;
-var puzzleCanvasPaddingY = puzzleCanvas.height * 0.02;
+var puzzleCanvasPaddingX = puzzleCanvas.width * 0;
+var puzzleCanvasPaddingY = puzzleCanvas.height * 0;
 var puzzleImageWidth = puzzleCanvas.width - puzzleCanvasPaddingX * 2;
 var puzzleImageHeight = puzzleCanvas.height - puzzleCanvasPaddingY * 2;
 // draw initial image

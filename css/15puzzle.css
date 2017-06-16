@@ -9,15 +9,12 @@ body {
 }
 
 /* puzzle */
-#puzzle_section {
+#puzzle_div {
     margin: auto;
     width: 500px;
     height: 500px;
-}
-#puzzle_canvas {
-    width: 100%;
-    height: 100%;
     background-color: antiquewhite;
+    position: relative;
 }
 
 /* puzzle controls */
