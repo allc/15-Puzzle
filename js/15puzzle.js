@@ -20,6 +20,15 @@ puzzleImageDiv.style.backgroundRepeat = 'no-repeat';
 puzzleDiv.appendChild(puzzleImageDiv);
 
 /**
+ * puzzle model
+ */
+class Board {
+    constructor() {
+
+    }
+}
+
+/**
  * start puzzle
  */
 function startPuzzle() {
@@ -42,7 +51,7 @@ function startPuzzle() {
     var totalWidth = puzzleImageDiv.clientWidth;
     var gridWidth = (totalWidth - (dimension - 1) * gridSpace) / dimension;
 
-    // rows
+    // rows div
     var rows = [];
     for (var i = 0; i < dimension; i++) {
         var row = document.createElement('div');
@@ -57,10 +66,10 @@ function startPuzzle() {
         puzzleImageDiv.appendChild(row);
     }
 
-    // grids
+    // grids div
     var grids = [];
     for (var i = 0; i < dimension; i++) {
-        var rowGrid = [];
+        var rowGrid = []; // grids in a row
         for (var j = 0; j < dimension; j++) {
             var grid = document.createElement('div');
             grid.style.width = gridWidth + 'px';
@@ -74,7 +83,69 @@ function startPuzzle() {
             rowGrid[j] = grid;
             rows[i].appendChild(grid);
         }
-        grid[i] = rowGrid;
+        grids[i] = rowGrid;
+    }
+
+    // generate board data
+    var board = [];
+    var count = 0;
+    for (var i = 0; i < dimension; i++) {
+        var row = [];
+        for (var j = 0; j < dimension; j++) {
+            row[j] = count;
+            count++;
+        }
+        board[i] = row;
+    }
+
+    var blankValue = count - 1;
+
+    var blankRow = dimension - 1;
+    var blankCol = dimension - 1;
+    for (var i = 0; i < 100; i++) {
+        var direction = Math.floor(Math.random() * 4);
+        switch (direction) {
+            case 0: // up
+                if (blankRow != dimension - 1) {
+                    board[blankRow][blankCol] = board[blankRow + 1][blankCol];
+                    board[blankRow + 1][blankCol] = blankValue;
+                    blankRow++;
+                }
+                break;
+            case 1: // down
+                if (blankRow != 0) {
+                    board[blankRow][blankCol] = board[blankRow - 1][blankCol];
+                    board[blankRow - 1][blankCol] = blankValue;
+                    blankRow--;
+                }
+                break;
+            case 2: // left
+                if (blankCol != dimension - 1) {
+                    board[blankRow][blankCol] = board[blankRow][blankCol + 1];
+                    board[blankRow][blankCol + 1] = blankValue;
+                    blankCol++;
+                }
+                break;
+            case 3: // right
+                if (blankCol != 0) {
+                    board[blankRow][blankCol] = board[blankRow][blankCol - 1];
+                    board[blankRow][blankCol - 1] = blankValue;
+                    blankCol--;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    // debug
+    for (var i = 0; i < dimension; i++) {
+        for (var j = 0; j < dimension; j++) {
+            grids[i][j].textContent = board[i][j];
+            if (i == blankRow && j == blankCol) {
+                grids[i][j].style.backgroundColor = 'green';
+            }
+        }
     }
 
 }
