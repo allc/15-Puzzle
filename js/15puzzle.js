@@ -22,11 +22,60 @@ puzzleDiv.appendChild(puzzleImageDiv);
 /**
  * puzzle model
  */
-class Board {
-    constructor() {
+class Puzzle {
 
+    constructor(board, blankRow, blankCol) {
+        this.board = board;
+        this.blankRow = blankRow;
+        this.blankCol = blankCol;
+        this.dimension = board.length;
+        this.blankValue = this.dimension * this.dimension - 1;
+    }
+
+    moveLeft() {
+        if (this.blankCol != this.dimension - 1) {
+            this.board[this.blankRow][this.blankCol] = this.board[this.blankRow][this.blankCol + 1];
+            this.board[this.blankRow][this.blankCol + 1] = this.blankValue;
+            this.blankCol++;
+            return true;
+        }
+        return false;
+    }
+
+    moveUp() {
+        if (this.blankRow != this.dimension - 1) {
+            this.board[this.blankRow][this.blankCol] = this.board[this.blankRow + 1][this.blankCol];
+            this.board[this.blankRow + 1][this.blankCol] = this.blankValue;
+            this.blankRow++;
+            return true;
+        }
+        return false;
+    }
+
+    moveRight() {
+        if (this.blankCol != 0) {
+            this.board[this.blankRow][this.blankCol] = this.board[this.blankRow][this.blankCol - 1];
+            this.board[this.blankRow][this.blankCol - 1] = this.blankValue;
+            this.blankCol--;
+            return true;
+        }
+        return false;
+    }
+
+    moveDown() {
+        if (this.blankRow != 0) {
+            this.board[this.blankRow][this.blankCol] = this.board[this.blankRow - 1][this.blankCol];
+            this.board[this.blankRow - 1][this.blankCol] = this.blankValue;
+            this.blankRow--;
+            return true;
+        }
+        return false;
     }
 }
+
+var puzzle; // puzzle model
+
+var grids; // grids div
 
 /**
  * start puzzle
@@ -67,7 +116,7 @@ function startPuzzle() {
     }
 
     // grids div
-    var grids = [];
+    grids = [];
     for (var i = 0; i < dimension; i++) {
         var rowGrid = []; // grids in a row
         for (var j = 0; j < dimension; j++) {
@@ -86,7 +135,7 @@ function startPuzzle() {
         grids[i] = rowGrid;
     }
 
-    // generate board data
+    // generate initial board data
     var board = [];
     var count = 0;
     for (var i = 0; i < dimension; i++) {
@@ -138,6 +187,11 @@ function startPuzzle() {
         }
     }
 
+    // create puzzle model
+    puzzle = new Puzzle(board, blankRow, blankCol);
+    
+    addKeyboardListeners();
+
     // debug
     for (var i = 0; i < dimension; i++) {
         for (var j = 0; j < dimension; j++) {
@@ -148,4 +202,43 @@ function startPuzzle() {
         }
     }
 
+    
+
+}
+
+function addKeyboardListeners() {
+    window.onkeydown = function(e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        switch (code) {
+            case 37:
+                // move left
+                puzzle.moveLeft();
+                break;
+            case 38:
+                // move up
+                puzzle.moveUp();
+                break;
+            case 39:
+                // move right
+                puzzle.moveRight();
+                break;
+            case 40:
+                // move down
+                puzzle.moveDown();
+                break;
+            default:
+                break;
+        }
+        // debug
+        for (var i = 0; i < puzzle.dimension; i++) {
+            for (var j = 0; j < puzzle.dimension; j++) {
+                grids[i][j].textContent = puzzle.board[i][j];
+                if (i == puzzle.blankRow && j == puzzle.blankCol) {
+                    grids[i][j].style.backgroundColor = 'green';
+                } else {
+                    grids[i][j].style.backgroundColor = 'grey';
+                }
+            }
+        }
+    }
 }
