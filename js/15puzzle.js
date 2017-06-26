@@ -71,6 +71,20 @@ class Puzzle {
         }
         return false;
     }
+
+    isGoal() {
+        var count = 0;
+        for (var i = 0; i < this.dimension; i++) {
+            for (var j = 0; j < this.dimension; j++) {
+                if (this.board[i][j] != count) {
+                    return false;
+                }
+                count++;
+            }
+        }
+        return true;
+    }
+
 }
 
 var puzzle; // puzzle model
@@ -192,17 +206,15 @@ function startPuzzle() {
     
     addKeyboardListeners();
 
-    // debug
+    // draw grids
     for (var i = 0; i < dimension; i++) {
         for (var j = 0; j < dimension; j++) {
             grids[i][j].textContent = board[i][j];
             if (i == blankRow && j == blankCol) {
-                grids[i][j].style.backgroundColor = 'green';
+                grids[i][j].style.backgroundColor = 'white';
             }
         }
     }
-
-    
 
 }
 
@@ -234,11 +246,14 @@ function addKeyboardListeners() {
             for (var j = 0; j < puzzle.dimension; j++) {
                 grids[i][j].textContent = puzzle.board[i][j];
                 if (i == puzzle.blankRow && j == puzzle.blankCol) {
-                    grids[i][j].style.backgroundColor = 'green';
+                    grids[i][j].style.backgroundColor = 'white';
                 } else {
                     grids[i][j].style.backgroundColor = 'grey';
                 }
             }
+        }
+        if (puzzle.isGoal()) {
+            alert("Puzzle Completed!");
         }
     }
 }
