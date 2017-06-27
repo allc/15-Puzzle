@@ -298,6 +298,9 @@ function startPuzzle() {
 
     inPuzzle = true;
 
+    // you are lucky if the puzzle is complete at the beginning
+    checkPuzzleComplete();
+
 }
 
 function addKeyboardListeners() {
