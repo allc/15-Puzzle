@@ -294,8 +294,8 @@ function startPuzzle() {
     var count = 0;
     for (var i = 0; i < dimension; i++) {
         for (var j = 0; j < dimension; j++) {
-            imgY[count] = 0 + grids[0][0].clientWidth * i + gridSpace * i;
-            imgX[count] = 0 + grids[0][0].clientHeight * j + gridSpace * j;
+            imgY[count] = grids[0][0].clientWidth * i + gridSpace * i;
+            imgX[count] = grids[0][0].clientHeight * j + gridSpace * j;
             count++;
         }
     }

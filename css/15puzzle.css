@@ -54,3 +54,8 @@ div#puzzle_dimension_options_div {
 #puzzle_dimension_options_div > input {
     width: 4em;
 }
+
+/* footer */
+footer a {
+    color: inherit;
+}
