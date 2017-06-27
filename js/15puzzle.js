@@ -30,6 +30,7 @@ class Puzzle {
         this.blankCol = blankCol;
         this.dimension = board.length;
         this.blankValue = this.dimension * this.dimension - 1;
+        this.stepTaken = 0;
     }
 
     moveLeft() {
@@ -92,6 +93,60 @@ var puzzle; // puzzle model
 var grids; // grids div
 
 /**
+ * controls
+ */
+function moveLeft() {
+    if (puzzle.moveLeft()) {
+        updatePuzzle();
+        puzzle.stepTaken++;
+        updateStep(puzzle.stepTaken);
+    }
+}
+
+function moveRight() {
+    if (puzzle.moveRight()) {
+        updatePuzzle();
+        puzzle.stepTaken++;
+        updateStep(puzzle.stepTaken);
+    }
+}
+
+function moveUp() {
+    if (puzzle.moveUp()) {
+        updatePuzzle();
+        puzzle.stepTaken++;
+        updateStep(puzzle.stepTaken);
+    }
+}
+
+function moveDown() {
+    if (puzzle.moveDown()) {
+        updatePuzzle();
+        puzzle.stepTaken++;
+        updateStep(puzzle.stepTaken);
+    }
+}
+
+function updateStep(step) {
+    var movesStatus = document.getElementById('moves_status');
+    movesStatus.textContent = step + " Moves"
+}
+
+function updatePuzzle() {
+    // debug
+    for (var i = 0; i < puzzle.dimension; i++) {
+        for (var j = 0; j < puzzle.dimension; j++) {
+            grids[i][j].textContent = puzzle.board[i][j];
+            if (i == puzzle.blankRow && j == puzzle.blankCol) {
+                grids[i][j].style.backgroundColor = 'white';
+            } else {
+                grids[i][j].style.backgroundColor = 'grey';
+            }
+        }
+    }
+}
+
+/**
  * start puzzle
  */
 function startPuzzle() {
@@ -142,6 +197,8 @@ function startPuzzle() {
                 grid.style.marginLeft = gridSpace + 'px';
             }
             grid.style.backgroundColor = 'grey';
+            grid.id = 'grid_' + i + '_' + j;
+            grid.addEventListener('click', gridClicked);
 
             rowGrid[j] = grid;
             rows[i].appendChild(grid);
@@ -224,36 +281,56 @@ function addKeyboardListeners() {
         switch (code) {
             case 37:
                 // move left
-                puzzle.moveLeft();
+                moveLeft();
                 break;
             case 38:
                 // move up
-                puzzle.moveUp();
+                moveUp();
                 break;
             case 39:
                 // move right
-                puzzle.moveRight();
+                moveRight();
                 break;
             case 40:
                 // move down
-                puzzle.moveDown();
+                moveDown();
                 break;
             default:
                 break;
         }
-        // debug
-        for (var i = 0; i < puzzle.dimension; i++) {
-            for (var j = 0; j < puzzle.dimension; j++) {
-                grids[i][j].textContent = puzzle.board[i][j];
-                if (i == puzzle.blankRow && j == puzzle.blankCol) {
-                    grids[i][j].style.backgroundColor = 'white';
-                } else {
-                    grids[i][j].style.backgroundColor = 'grey';
-                }
-            }
-        }
+
         if (puzzle.isGoal()) {
             alert("Puzzle Completed!");
         }
+    }
+}
+
+function gridClicked(e) {
+    var id = e.target.id;
+    var strArr = id.split('_');
+    var row = strArr[1];
+    var col = strArr[2];
+    console.log(row + " " + col + ", " + puzzle.blankRow + " " + puzzle.blankCol);
+    if (puzzle.blankRow == row) {
+        if (puzzle.blankCol == +col - 1) {
+            // left
+            moveLeft();
+        } else if (puzzle.blankCol == +col + 1) {
+            // right
+            moveRight();
+        }
+    }  else if (puzzle.blankCol == col) {
+        if (puzzle.blankRow == +row - 1) {
+            // up
+            moveUp();
+        }
+        if (puzzle.blankRow == +row + 1) {
+            // down
+            moveDown();
+        }
+    }
+
+    if (puzzle.isGoal()) {
+        alert("Puzzle Completed!");
     }
 }
