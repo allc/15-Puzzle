@@ -157,9 +157,9 @@ function updatePuzzle() {
 
 function checkPuzzleComplete() {
     if (puzzle.isGoal()) {
-        var puzzleCompleteStatus = document.createElement('div');
-        puzzleCompleteStatus.textContent = 'Puzzle completed!';
-        document.getElementById('puzzle_status').appendChild(puzzleCompleteStatus);
+        var puzzleCompleteStatus = document.getElementById('puzzle_complete_status');
+        puzzleCompleteStatus.hidden = false;
+        document.getElementById('celebrate').hidden = false;
         inPuzzle = false;
     }
 }
@@ -226,6 +226,8 @@ function startPuzzle() {
 
     // puzzle status
     updateStep(0);
+    document.getElementById('puzzle_complete_status').hidden = true;
+    document.getElementById('celebrate').hidden = true;
 
     // generate initial board data
     var board = [];
