@@ -25,7 +25,7 @@ body {
     background: url("../img/celebrate.gif") no-repeat;
     background-size: cover;
     z-index: 999;
-    position: absolute;
+    position: fixed;
     pointer-events: none;
 }
 
