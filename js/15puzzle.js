@@ -7,14 +7,15 @@
  */
 
 var gridSpace = 1; // space between grids (in px)
+var puzzleMargin = 2; // (in %)
 
 var puzzleDiv = document.getElementById('puzzle_div');
 var puzzleImageDiv = document.createElement('div');
-puzzleImageDiv.style.height = '96%';
-puzzleImageDiv.style.width = '96%';
-puzzleImageDiv.style.margin = '2%';
+puzzleImageDiv.style.height = 100 - 2 * puzzleMargin + '%';
+puzzleImageDiv.style.width = 100 - 2 * puzzleMargin + '%';
+puzzleImageDiv.style.margin = puzzleMargin + '%';
 puzzleImageDiv.style.position = 'absolute';
-puzzleImageDiv.style.backgroundImage = "url('img/testImg.png')";
+puzzleImageDiv.style.backgroundImage = "url('img/brighton.jpg')";
 puzzleImageDiv.style.backgroundSize = '100% 100%';
 puzzleImageDiv.style.backgroundRepeat = 'no-repeat';
 puzzleDiv.appendChild(puzzleImageDiv);
@@ -97,6 +98,9 @@ var puzzle; // puzzle model
 
 var grids; // grids div
 
+var imgX = [];
+var imgY = [];
+
 /**
  * controls
  */
@@ -142,14 +146,13 @@ function updateStep(step) {
 }
 
 function updatePuzzle() {
-    // debug
     for (var i = 0; i < puzzle.dimension; i++) {
         for (var j = 0; j < puzzle.dimension; j++) {
-            grids[i][j].textContent = puzzle.board[i][j];
-            if (i == puzzle.blankRow && j == puzzle.blankCol) {
-                grids[i][j].style.backgroundColor = 'white';
+            if (i != puzzle.blankRow || j != puzzle.blankCol) {
+                grids[i][j].style.background = 'url("img/brighton.jpg") ' + imgX[puzzle.board[i][j]] + 'px ' + imgY[puzzle.board[i][j]] + 'px';
+                grids[i][j].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
             } else {
-                grids[i][j].style.backgroundColor = 'grey';
+                grids[i][j].style.background = 'none';
             }
         }
     }
@@ -157,10 +160,12 @@ function updatePuzzle() {
 
 function checkPuzzleComplete() {
     if (puzzle.isGoal()) {
+        inPuzzle = false;
         var puzzleCompleteStatus = document.getElementById('puzzle_complete_status');
         puzzleCompleteStatus.hidden = false;
+        grids[puzzle.blankRow][puzzle.blankCol].style.background = 'url("img/brighton.jpg") ' + imgX[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px ' + imgY[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px';
+        grids[puzzle.blankRow][puzzle.blankCol].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
         document.getElementById('celebrate').hidden = false;
-        inPuzzle = false;
     }
 }
 
@@ -214,7 +219,6 @@ function startPuzzle() {
             if (j != 0) {
                 grid.style.marginLeft = gridSpace + 'px';
             }
-            grid.style.backgroundColor = 'grey';
             grid.id = 'grid_' + i + '_' + j;
             grid.addEventListener('click', gridClicked);
 
@@ -287,11 +291,20 @@ function startPuzzle() {
     addKeyboardListeners();
 
     // draw grids
+    var count = 0;
     for (var i = 0; i < dimension; i++) {
         for (var j = 0; j < dimension; j++) {
-            grids[i][j].textContent = board[i][j];
-            if (i == blankRow && j == blankCol) {
-                grids[i][j].style.backgroundColor = 'white';
+            imgY[count] = 0 + grids[0][0].clientWidth * i + gridSpace * i;
+            imgX[count] = 0 + grids[0][0].clientHeight * j + gridSpace * j;
+            count++;
+        }
+    }
+
+    for (var i = 0; i < dimension; i++) {
+        for (var j = 0; j < dimension; j++) {
+            if (i != blankRow || j != blankCol) {
+                grids[i][j].style.background = 'url("img/brighton.jpg") ' + imgX[board[i][j]] + 'px ' + imgY[board[i][j]] + 'px';
+                grids[i][j].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
             }
         }
     }
@@ -302,6 +315,10 @@ function startPuzzle() {
     checkPuzzleComplete();
 
 }
+
+/**
+ * event listeners
+ */
 
 function addKeyboardListeners() {
     window.onkeydown = function(e) {
