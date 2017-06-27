@@ -20,6 +20,11 @@ puzzleImageDiv.style.backgroundRepeat = 'no-repeat';
 puzzleDiv.appendChild(puzzleImageDiv);
 
 /**
+ * game status
+ */
+var inPuzzle = false;
+
+/**
  * puzzle model
  */
 class Puzzle {
@@ -100,6 +105,7 @@ function moveLeft() {
         updatePuzzle();
         puzzle.stepTaken++;
         updateStep(puzzle.stepTaken);
+        checkPuzzleComplete();
     }
 }
 
@@ -108,6 +114,7 @@ function moveRight() {
         updatePuzzle();
         puzzle.stepTaken++;
         updateStep(puzzle.stepTaken);
+        checkPuzzleComplete();
     }
 }
 
@@ -116,6 +123,7 @@ function moveUp() {
         updatePuzzle();
         puzzle.stepTaken++;
         updateStep(puzzle.stepTaken);
+        checkPuzzleComplete();
     }
 }
 
@@ -124,6 +132,7 @@ function moveDown() {
         updatePuzzle();
         puzzle.stepTaken++;
         updateStep(puzzle.stepTaken);
+        checkPuzzleComplete();
     }
 }
 
@@ -143,6 +152,15 @@ function updatePuzzle() {
                 grids[i][j].style.backgroundColor = 'grey';
             }
         }
+    }
+}
+
+function checkPuzzleComplete() {
+    if (puzzle.isGoal()) {
+        var puzzleCompleteStatus = document.createElement('div');
+        puzzleCompleteStatus.textContent = 'Puzzle completed!';
+        document.getElementById('puzzle_status').appendChild(puzzleCompleteStatus);
+        inPuzzle = false;
     }
 }
 
@@ -205,6 +223,9 @@ function startPuzzle() {
         }
         grids[i] = rowGrid;
     }
+
+    // puzzle status
+    updateStep(0);
 
     // generate initial board data
     var board = [];
@@ -273,64 +294,61 @@ function startPuzzle() {
         }
     }
 
+    inPuzzle = true;
+
 }
 
 function addKeyboardListeners() {
     window.onkeydown = function(e) {
-        var code = e.keyCode ? e.keyCode : e.which;
-        switch (code) {
-            case 37:
-                // move left
-                moveLeft();
-                break;
-            case 38:
-                // move up
-                moveUp();
-                break;
-            case 39:
-                // move right
-                moveRight();
-                break;
-            case 40:
-                // move down
-                moveDown();
-                break;
-            default:
-                break;
-        }
-
-        if (puzzle.isGoal()) {
-            alert("Puzzle Completed!");
+        if (inPuzzle) {
+            var code = e.keyCode ? e.keyCode : e.which;
+            switch (code) {
+                case 37:
+                    // move left
+                    moveLeft();
+                    break;
+                case 38:
+                    // move up
+                    moveUp();
+                    break;
+                case 39:
+                    // move right
+                    moveRight();
+                    break;
+                case 40:
+                    // move down
+                    moveDown();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
 
 function gridClicked(e) {
-    var id = e.target.id;
-    var strArr = id.split('_');
-    var row = strArr[1];
-    var col = strArr[2];
-    console.log(row + " " + col + ", " + puzzle.blankRow + " " + puzzle.blankCol);
-    if (puzzle.blankRow == row) {
-        if (puzzle.blankCol == +col - 1) {
-            // left
-            moveLeft();
-        } else if (puzzle.blankCol == +col + 1) {
-            // right
-            moveRight();
+    if (inPuzzle) {
+        var id = e.target.id;
+        var strArr = id.split('_');
+        var row = strArr[1];
+        var col = strArr[2];
+        if (puzzle.blankRow == row) {
+            if (puzzle.blankCol == +col - 1) {
+                // left
+                moveLeft();
+            } else if (puzzle.blankCol == +col + 1) {
+                // right
+                moveRight();
+            }
+        }  else if (puzzle.blankCol == col) {
+            if (puzzle.blankRow == +row - 1) {
+                // up
+                moveUp();
+            }
+            if (puzzle.blankRow == +row + 1) {
+                // down
+                moveDown();
+            }
         }
-    }  else if (puzzle.blankCol == col) {
-        if (puzzle.blankRow == +row - 1) {
-            // up
-            moveUp();
-        }
-        if (puzzle.blankRow == +row + 1) {
-            // down
-            moveDown();
-        }
-    }
-
-    if (puzzle.isGoal()) {
-        alert("Puzzle Completed!");
     }
 }
