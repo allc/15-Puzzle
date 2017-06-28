@@ -149,7 +149,7 @@ function updatePuzzle() {
     for (var i = 0; i < puzzle.dimension; i++) {
         for (var j = 0; j < puzzle.dimension; j++) {
             if (i != puzzle.blankRow || j != puzzle.blankCol) {
-                grids[i][j].style.background = 'url("img/brighton.jpg") ' + imgX[puzzle.board[i][j]] + 'px ' + imgY[puzzle.board[i][j]] + 'px';
+                grids[i][j].style.background = 'url("img/brighton.jpg") ' + '-' + imgX[puzzle.board[i][j]] + 'px ' + '-' + imgY[puzzle.board[i][j]] + 'px';
                 grids[i][j].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
             } else {
                 grids[i][j].style.background = 'none';
@@ -163,7 +163,7 @@ function checkPuzzleComplete() {
         inPuzzle = false;
         var puzzleCompleteStatus = document.getElementById('puzzle_complete_status');
         puzzleCompleteStatus.hidden = false;
-        grids[puzzle.blankRow][puzzle.blankCol].style.background = 'url("img/brighton.jpg") ' + imgX[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px ' + imgY[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px';
+        grids[puzzle.blankRow][puzzle.blankCol].style.background = 'url("img/brighton.jpg") ' + '-' + imgX[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px ' + '-' + imgY[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px';
         grids[puzzle.blankRow][puzzle.blankCol].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
         document.getElementById('celebrate').hidden = false;
     }
@@ -201,8 +201,6 @@ function startPuzzle() {
         if (i != 0) {
             row.style.marginTop = gridSpace + 'px';
         }
-        //row.style.backgroundColor = 'blue';
-
         rows[i] = row;
         puzzleImageDiv.appendChild(row);
     }
@@ -303,7 +301,7 @@ function startPuzzle() {
     for (var i = 0; i < dimension; i++) {
         for (var j = 0; j < dimension; j++) {
             if (i != blankRow || j != blankCol) {
-                grids[i][j].style.background = 'url("img/brighton.jpg") ' + imgX[board[i][j]] + 'px ' + imgY[board[i][j]] + 'px';
+                grids[i][j].style.background = 'url("img/brighton.jpg") ' + '-' + imgX[board[i][j]] + 'px ' + '-' + imgY[board[i][j]] + 'px';
                 grids[i][j].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
             }
         }
