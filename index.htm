@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <title>8 Puzzle</title>
+    <title>15 Puzzle</title>
 	<link rel="stylesheet" href="css/15puzzle.css">
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>-->
 </head>
 <body>
 <!-- I Googled for the celebration gif :P -->
@@ -22,10 +23,10 @@
     <div id="puzzle_controls">
         <div onclick="startPuzzle()"><label>Start<button id="start"></button></label></div>
         <div id="puzzle_dimension_options_div">Puzzle Dimension: <input type="number" value="2" min="2" max="4" list="puzzle_dimension_list" id="puzzle_dimension"><datalist id="puzzle_dimension_list"><option value="3">3</option><option value="4">4</option></datalist></input></div>
-        <!--<div><label>Create a Puzzle Using Your Own Image<input id="file" type="file"></label></div>-->
+        <div><label>Create a Puzzle Using Your Own Image<input id="file" type="file" onchange="imageChoosen()"></label></div>
     </div>
 
-    <footer>Project repository: <a href="https://github.com/allc/8-Puzzle">https://github.com/allc/8-Puzzle</a></footer>
+    <footer>Project repository: <a href="https://github.com/allc/15-Puzzle">https://github.com/allc/15-Puzzle</a></footer>
 </div>
 <script src="js/15puzzle.js"></script>
 </body>

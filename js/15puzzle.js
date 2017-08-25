@@ -3,11 +3,29 @@
  */
 
 /**
- * set up puzzle image div and show initial image
+ * puzzle global vars
  */
 
+var imagePath = 'img/brighton.jpg'; // puzzle image url
+
 var gridSpace = 1; // space between grids (in px)
-var puzzleMargin = 2; // (in %)
+var puzzleMargin = 2; // puzzle margin (in %)
+
+/**
+ * use own image
+ */
+function imageChoosen() {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        imagePath = e.target.result;
+        changePuzzleImage();
+    };
+    reader.readAsDataURL(document.getElementById('file').files[0]);
+}
+
+/**
+ * set up puzzle image div and show initial image
+ */
 
 var puzzleDiv = document.getElementById('puzzle_div');
 var puzzleImageDiv = document.createElement('div');
@@ -15,10 +33,33 @@ puzzleImageDiv.style.height = 100 - 2 * puzzleMargin + '%';
 puzzleImageDiv.style.width = 100 - 2 * puzzleMargin + '%';
 puzzleImageDiv.style.margin = puzzleMargin + '%';
 puzzleImageDiv.style.position = 'absolute';
-puzzleImageDiv.style.backgroundImage = "url('img/brighton.jpg')";
+puzzleImageDiv.style.backgroundImage = "url(" + imagePath + ")";
 puzzleImageDiv.style.backgroundSize = '100% 100%';
 puzzleImageDiv.style.backgroundRepeat = 'no-repeat';
 puzzleDiv.appendChild(puzzleImageDiv);
+
+/**
+ * change puzzle image
+ */
+function changePuzzleImage() {
+    clearPuzzle();
+    puzzleImageDiv.style.backgroundImage = "url(" + imagePath + ")";
+}
+
+/**
+ * clear puzzle
+ */
+function clearPuzzle() {
+    puzzleImageDiv.style.backgroundImage = 'none';
+    while (puzzleImageDiv.firstChild) {
+        puzzleImageDiv.removeChild(puzzleImageDiv.firstChild);
+    }
+
+    // update puzzle status
+    updateStep(0);
+    document.getElementById('puzzle_complete_status').hidden = true;
+    document.getElementById('celebrate').hidden = true;
+}
 
 /**
  * game status
@@ -149,7 +190,7 @@ function updatePuzzle() {
     for (var i = 0; i < puzzle.dimension; i++) {
         for (var j = 0; j < puzzle.dimension; j++) {
             if (i != puzzle.blankRow || j != puzzle.blankCol) {
-                grids[i][j].style.background = 'url("img/brighton.jpg") ' + '-' + imgX[puzzle.board[i][j]] + 'px ' + '-' + imgY[puzzle.board[i][j]] + 'px';
+                grids[i][j].style.background = 'url(' + imagePath + ') ' + '-' + imgX[puzzle.board[i][j]] + 'px ' + '-' + imgY[puzzle.board[i][j]] + 'px';
                 grids[i][j].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
             } else {
                 grids[i][j].style.background = 'none';
@@ -163,7 +204,7 @@ function checkPuzzleComplete() {
         inPuzzle = false;
         var puzzleCompleteStatus = document.getElementById('puzzle_complete_status');
         puzzleCompleteStatus.hidden = false;
-        grids[puzzle.blankRow][puzzle.blankCol].style.background = 'url("img/brighton.jpg") ' + '-' + imgX[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px ' + '-' + imgY[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px';
+        grids[puzzle.blankRow][puzzle.blankCol].style.background = 'url(' + imagePath + ') ' + '-' + imgX[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px ' + '-' + imgY[puzzle.board[puzzle.blankRow][puzzle.blankCol]] + 'px';
         grids[puzzle.blankRow][puzzle.blankCol].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
         document.getElementById('celebrate').hidden = false;
     }
@@ -173,11 +214,7 @@ function checkPuzzleComplete() {
  * start puzzle
  */
 function startPuzzle() {
-    // clear puzzle
-    puzzleImageDiv.style.backgroundImage = 'none';
-    while (puzzleImageDiv.firstChild) {
-        puzzleImageDiv.removeChild(puzzleImageDiv.firstChild);
-    }
+    clearPuzzle();
 
     // dimension
     var dimension = 3;
@@ -225,11 +262,6 @@ function startPuzzle() {
         }
         grids[i] = rowGrid;
     }
-
-    // puzzle status
-    updateStep(0);
-    document.getElementById('puzzle_complete_status').hidden = true;
-    document.getElementById('celebrate').hidden = true;
 
     // generate initial board data
     var board = [];
@@ -301,7 +333,7 @@ function startPuzzle() {
     for (var i = 0; i < dimension; i++) {
         for (var j = 0; j < dimension; j++) {
             if (i != blankRow || j != blankCol) {
-                grids[i][j].style.background = 'url("img/brighton.jpg") ' + '-' + imgX[board[i][j]] + 'px ' + '-' + imgY[board[i][j]] + 'px';
+                grids[i][j].style.background = 'url(' + imagePath + ') ' + '-' + imgX[board[i][j]] + 'px ' + '-' + imgY[board[i][j]] + 'px';
                 grids[i][j].style.backgroundSize = puzzleImageDiv.clientWidth + 'px ' + puzzleImageDiv.clientHeight + 'px';
             }
         }
