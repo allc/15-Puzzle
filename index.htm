@@ -23,7 +23,7 @@
     <div id="puzzle_controls">
         <div onclick="startPuzzle()"><label>Start<button id="start"></button></label></div>
         <div id="puzzle_dimension_options_div">Puzzle Dimension: <input type="number" value="2" min="2" max="4" list="puzzle_dimension_list" id="puzzle_dimension"><datalist id="puzzle_dimension_list"><option value="3">3</option><option value="4">4</option></datalist></input></div>
-        <div><label>Create a Puzzle Using Your Own Image<input id="file" type="file" onchange="imageChoosen()"></label></div>
+        <div onclick="chooseImageClicked()">Create a Puzzle Using Your Own Image</div><input id="file" type="file" onchange="imageChoosen()">
     </div>
 
     <footer>Project repository: <a href="https://github.com/allc/15-Puzzle">https://github.com/allc/15-Puzzle</a></footer>

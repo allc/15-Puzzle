@@ -12,6 +12,17 @@ var gridSpace = 1; // space between grids (in px)
 var puzzleMargin = 2; // puzzle margin (in %)
 
 /**
+ * puzzle config buttons
+ */
+
+/**
+ * clicked choose image button
+ */
+function chooseImageClicked() {
+    document.getElementById('file').click();
+}
+
+/**
  * use own image
  */
 function imageChoosen() {
